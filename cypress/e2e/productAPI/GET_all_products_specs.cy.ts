@@ -22,11 +22,14 @@ describe("Products API testing", () => {
         cy.request<ApiResponse>({
             method: 'GET',
             url: 'https://dummyjson.com/products'
-        }).then((response) => {
+        }).then(response => {
             cy.log(JSON.stringify(response));
 
-            // Validate status code
-            expect(response.status).to.equal(200);
+            // Errors handling
+            if (response.status !== 200) {
+                console.error('Received non-200 status code:', response.status);
+                throw new Error(`Received non-200 status code: ${response.status}`);
+            }
 
             // Validate response time
             expect(response.duration).to.be.lessThan(3000); // Assumption: Response time should be less than 3 seconds
