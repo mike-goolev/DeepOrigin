@@ -64,6 +64,10 @@ describe("Products API testing", () => {
             expect(response.body.total).to.equal(100);
             expect(response.body.skip).to.equal(0);
             expect(response.body.limit).to.equal(30);
+
+            // Validate header
+            expect(response.headers).to.exist;
+            expect(response.headers['content-type']).to.include('application/json');
         });
     });
 });
