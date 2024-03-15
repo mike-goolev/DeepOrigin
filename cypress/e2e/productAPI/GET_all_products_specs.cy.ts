@@ -28,6 +28,9 @@ describe("Products API testing", () => {
             // Validate status code
             expect(response.status).to.equal(200);
 
+            // Validate response time
+            expect(response.duration).to.be.lessThan(3000); // Assumption: Response time should be less than 3 seconds
+
             // Validate body data response
             response.body.products.forEach((product, index) => {
                 // Validate propertiy values of the first product[0]
@@ -53,8 +56,8 @@ describe("Products API testing", () => {
                 expect(product.stock).to.be.a('number');
                 expect(product.brand).to.be.a('string');
                 expect(product.category).to.be.a('string');
-                expect(product.thumbnail).to.be.a('string');
-                expect(product.images).to.be.an('array').that.is.not.empty;
+                expect(product.thumbnail).to.be.a('string'); // assumption that thumbnail is determined like "clicked" vs "not clicked"
+                expect(product.images).to.be.an('array').that.is.not.empty; // assumption that all products should include images
             });
 
             // Validate other property values
