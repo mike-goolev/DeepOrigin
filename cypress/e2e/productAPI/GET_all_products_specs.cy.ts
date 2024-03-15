@@ -32,7 +32,7 @@ describe("Products API testing", () => {
             }
 
             // Validate response time
-            expect(response.duration).to.be.lessThan(3000); // Assumption: Response time should be less than 3 seconds
+            expect(response.duration).to.be.lessThan(2000); // Assumption: Response time should be less than 2 seconds
 
             // Validate body data response
             response.body.products.forEach((product, index) => {
