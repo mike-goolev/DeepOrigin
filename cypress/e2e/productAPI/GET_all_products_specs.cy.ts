@@ -56,8 +56,8 @@ describe("Products API testing", () => {
                 expect(product.stock).to.be.a('number');
                 expect(product.brand).to.be.a('string');
                 expect(product.category).to.be.a('string');
-                expect(product.thumbnail).to.be.a('string'); // assumption that thumbnail is determined like "clicked" vs "not clicked"
-                expect(product.images).to.be.an('array').that.is.not.empty; // assumption that all products should include images
+                expect(product.thumbnail).to.be.a('string'); // asumption here that all products shuld have a small low-level resolution image of the product (thumbnail URL in the API response)
+                expect(product.images).to.be.an('array').that.is.not.empty; // assumption here that all products should include images (picture names in the API response)
             });
 
             // Validate other property values
