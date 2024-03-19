@@ -8,16 +8,38 @@ describe("Products API testing", () => {
             method: 'GET',
             url: 'https://dummyjson.com/products/categories'
         }).then(response => {
+            // Log only the response body
+            console.log(response.body);
+
             // Validate response status
             expect(response.status).to.equal(200);
 
-            // Validate response body
-            expect(response.body.categories).to.be.an('array').that.is.not.empty;
+            // Check response body is an array
+            expect(response.body).to.be.an('array');
 
-            // Validate each category is a string
-            response.body.categories.forEach(category => {
-                expect(category).to.be.a('string');
-            });
+            // Check values of each category
+            expect(response.body).to.eql([
+                "smartphones",
+                "laptops",
+                "fragrances",
+                "skincare",
+                "groceries",
+                "home-decoration",
+                "furniture",
+                "tops",
+                "womens-dresses",
+                "womens-shoes",
+                "mens-shirts",
+                "mens-shoes",
+                "mens-watches",
+                "womens-watches",
+                "womens-bags",
+                "womens-jewellery",
+                "sunglasses",
+                "automotive",
+                "motorcycle",
+                "lighting"
+            ]);
         });
     });
 });
