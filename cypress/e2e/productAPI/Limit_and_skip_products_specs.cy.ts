@@ -32,7 +32,7 @@ describe("Products API testing", () => {
 
             // Validate selected properties for each product
             response.body.products.forEach(product => {
-                expect(product).to.have.keys('title', 'price');
+                expect(product).to.have.keys('id', 'title', 'price');
                 expect(product.title).to.be.a('string');
                 expect(product.price).to.be.a('number');
             });
