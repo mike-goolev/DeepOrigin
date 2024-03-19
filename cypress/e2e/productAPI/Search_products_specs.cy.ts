@@ -1,0 +1,76 @@
+interface SearchProductsAPIResponse {
+    products: {
+        id: number;
+        title: string;
+        description: string;
+        price: number;
+        discountPercentage: number;
+        rating: number;
+        stock: number;
+        brand: string;
+        category: string;
+        thumbnail: string;
+        images: string[];
+    }[];
+    total: number;
+    skip: number;
+    limit: number;
+}
+
+describe("Products API testing", () => {
+    it("Search Products", () => {
+        cy.request<SearchProductsAPIResponse>({
+            method: 'GET',
+            url: 'https://dummyjson.com/products/search?q=phone'
+        }).then(response => {
+            cy.log(JSON.stringify(response));
+
+            // Errors handling
+            if (response.status !== 200) {
+                console.error('Received non-200 status code:', response.status);
+                throw new Error(`Received non-200 status code: ${response.status}`);
+            }
+
+            // Validate response time
+            expect(response.duration).to.be.lessThan(2000); // Assumption: Response time should be less than 2 seconds
+
+            // Validate body data response
+            response.body.products.forEach((product, index) => {
+                // Validate propertiy values of the first product[0]
+                if (index === 0) {
+                    expect(product.id).to.equal(1);
+                    expect(product.title).to.equal('iPhone 9');
+                    expect(product.description).to.equal('An apple mobile which is nothing like apple');
+                    expect(product.price).to.equal(549);
+                    expect(product.discountPercentage).to.equal(12.96);
+                    expect(product.rating).to.equal(4.69);
+                    expect(product.stock).to.equal(94);
+                    expect(product.brand).to.equal('Apple');
+                    expect(product.category).to.equal('smartphones');
+                }
+
+                // Validate common properties for all products
+                expect(product.id).to.be.a('number');
+                expect(product.title).to.be.a('string');
+                expect(product.description).to.be.a('string');
+                expect(product.price).to.be.a('number');
+                expect(product.discountPercentage).to.be.a('number');
+                expect(product.rating).to.be.a('number');
+                expect(product.stock).to.be.a('number');
+                expect(product.brand).to.be.a('string');
+                expect(product.category).to.be.a('string');
+                expect(product.thumbnail).to.be.a('string'); // asumption here that all products shuld have a small low-level resolution image of the product (thumbnail URL in the API response)
+                expect(product.images).to.be.an('array').that.is.not.empty; // assumption here that all products should include images (picture names in the API response)
+            });
+
+            // Validate other property values
+            expect(response.body.total).to.equal(4);
+            expect(response.body.skip).to.equal(0);
+            expect(response.body.limit).to.equal(4);
+
+            // Validate header
+            expect(response.headers).to.exist;
+            expect(response.headers['content-type']).to.include('application/json');
+        });
+    });
+});
