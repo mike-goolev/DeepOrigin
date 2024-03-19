@@ -14,8 +14,8 @@ describe("Products API testing", () => {
         }).then(response => {
             cy.log(JSON.stringify(response));
 
-            // Validate response status - why 201 is failing after POST here????
-            expect(response.status).to.equal(200);
+            // Validate response status - why 201 is failing here????
+            expect(response.status).to.equal(201);
 
             // Validate product data
             expect(response.body.title).to.equal('BMW Pencil');

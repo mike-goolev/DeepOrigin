@@ -10,6 +10,8 @@ interface ProductApiResponse {
     category: string;
     thumbnail: string;
     images: string[];
+    isDeleted?: boolean;
+    deletedOn?: string;
 }
 
 describe("Products API testing", () => {
@@ -37,6 +39,8 @@ describe("Products API testing", () => {
             expect(product.category).to.equal('smartphones');
             expect(product.thumbnail).to.be.a('string');
             expect(product.images).to.be.an('array').that.is.not.empty;
+            expect(product.isDeleted).to.be.true; // Assuming isDeleted is true after deletion
+            expect(product.deletedOn).to.be.a('string'); // assumption that "ISOTime" is a string
         });
     });
 });
